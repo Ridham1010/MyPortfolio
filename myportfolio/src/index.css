@@ -1,0 +1,23 @@
+/* This file sets up Tailwind CSS and the global styles for the page.
+  It's crucial that overflow is NOT hidden here to allow for scrolling.
+*/
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+body {
+  background-color: #000; /* A solid black fallback background */
+}
+
