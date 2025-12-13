@@ -1,0 +1,76 @@
+.glitch-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.glitch-title {
+  font-family: 'Space Grotesk', sans-serif; /* Your futuristic font */
+  font-size: 6rem; /* Matches your previous main-heading size */
+  font-weight: 800;
+  color: white; /* Solid white is required for the effect to pop */
+  position: relative;
+  display: inline-block;
+  margin: 0;
+  line-height: 1.1;
+  letter-spacing: -2px;
+}
+
+/* The Pseudo Elements (The Glitch Layers) */
+.glitch-title::before,
+.glitch-title::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent; /* Changed from black to transparent */
+}
+
+/* Layer 1: Pink/Red Shift */
+.glitch-title::before {
+  left: 2px;
+  text-shadow: -2px 0 #ff00c1; /* Cyber Pink */
+  clip-path: inset(45% 0 30% 0); /* Visible slice */
+  animation: glitch-anim-1 2.5s infinite linear alternate-reverse;
+  z-index: -1;
+}
+
+/* Layer 2: Cyan/Blue Shift */
+.glitch-title::after {
+  left: -2px;
+  text-shadow: -2px 0 #00fff9; /* Cyber Blue */
+  clip-path: inset(10% 0 65% 0); /* Visible slice */
+  animation: glitch-anim-2 3s infinite linear alternate-reverse;
+  z-index: -2;
+}
+
+/* --- Animations --- */
+
+/* Rapid jagged movement for layer 1 */
+@keyframes glitch-anim-1 {
+  0% { clip-path: inset(80% 0 5% 0); }
+  20% { clip-path: inset(20% 0 60% 0); }
+  40% { clip-path: inset(50% 0 10% 0); }
+  60% { clip-path: inset(10% 0 80% 0); }
+  80% { clip-path: inset(30% 0 20% 0); }
+  100% { clip-path: inset(70% 0 15% 0); }
+}
+
+/* Rapid jagged movement for layer 2 */
+@keyframes glitch-anim-2 {
+  0% { clip-path: inset(15% 0 70% 0); }
+  20% { clip-path: inset(60% 0 10% 0); }
+  40% { clip-path: inset(40% 0 50% 0); }
+  60% { clip-path: inset(80% 0 5% 0); }
+  80% { clip-path: inset(10% 0 30% 0); }
+  100% { clip-path: inset(30% 0 60% 0); }
+}
+
+/* Responsive Sizing */
+@media (max-width: 768px) {
+  .glitch-title {
+    font-size: 3.5rem;
+  }
+}

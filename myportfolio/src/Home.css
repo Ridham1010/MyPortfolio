@@ -1,0 +1,305 @@
+/* src/Home.css */
+
+/* Global Settings */
+.app-container {
+  position: relative;
+  width: 100%;
+  font-family: 'Inter', sans-serif;
+  color: white;
+  overflow-x: hidden; /* Prevents horizontal scroll from animations */
+}
+
+.background-layer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 1; 
+}
+
+/* Sections */
+.hero-section,
+.scroll-section {
+  position: relative; 
+  z-index: 2; 
+  width: 100%;
+  display: flex;
+  padding: 0 2rem;
+  background-color: transparent; 
+  pointer-events: none;
+}
+
+.content-container, .intro-text-container {
+  pointer-events: auto;
+  text-align: center;
+}
+
+/* Hero Section */
+.hero-section {
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Scroll Section */
+.scroll-section {
+  min-height: 100vh;
+  padding-bottom: 150px;
+  /* IMPORTANT FIX: This stacks the Intro and Experience vertically */
+  flex-direction: column; 
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.intro-text-container {
+  max-width: 800px;
+  margin-bottom: 50px; /* Space between intro and timeline */
+}
+
+/* Bio Text */
+.bio-text {
+  font-size: 2rem;
+  font-weight: 500; 
+  line-height: 1.6;
+  margin: 0;
+  background: linear-gradient(to right, #ffffff, #d4caff, #B19EEF);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+  filter: drop-shadow(0 0 8px rgba(177, 158, 239, 0.5));
+  animation: shimmer 5s linear infinite alternate;
+}
+
+@keyframes shimmer {
+  to { background-position: 200% center; }
+}
+
+/* Typewriter */
+.typewriter-container {
+  font-family: 'Courier New', monospace;
+  font-size: 3rem;  
+  font-weight: 700;
+  color: #ffffff;
+  min-height: 4rem; 
+  display: inline-block;
+}
+
+.dynamic-text {
+  color: #ad43ea6f; 
+  text-shadow: 0 0 5px #ad31e2, 0 0 15px rgba(135, 23, 240, 0.8);
+}
+
+.cursor {
+  display: inline-block;
+  color: #00ff88; 
+  margin-left: 5px;
+  animation: blink 1s step-end infinite;
+  font-size: 3rem;
+  text-shadow: 0 0 10px rgba(0, 255, 136, 0.6);
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* Button */
+.futuristic-btn {
+  font-family: 'Rajdhani', sans-serif;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1em 3em;
+  border-radius: 4px;
+  background: rgba(30, 30, 60, 0.6);
+  box-shadow: 0 4px 32px 0 rgba(80, 0, 255, 0.15), 0 0 0 1px #7f5fff;
+  border: 1px solid rgba(127, 85, 255, 0.5);
+  color: #fff;
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-decoration: none;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  margin-top: 2.5rem;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.futuristic-btn:hover {
+  background: rgba(127, 85, 255, 0.2);
+  box-shadow: 0 0 30px rgba(127, 85, 255, 0.6);
+  border-color: #fff;
+  transform: translateY(-2px);
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+}
+
+/* --- NEW TIMELINE STYLES --- */
+
+/* =========================================
+   STRICT SEPARATION TIMELINE STYLES
+   ========================================= */
+
+.timeline-section {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  position: relative;
+  min-height: 80vh; 
+  padding-bottom: 5rem;
+  /* Ensure no centering overrides alignment */
+  text-align: left;
+}
+
+.timeline-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 40px; /* Space between rows */
+}
+
+/* --- THE LINES (Absolute to the container, anchored left) --- */
+/* We position these at 40px from the left to sit exactly in the middle of the 80px marker column */
+.timeline-line-bg {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 38px; /* 40px center - 2px half-width */
+  width: 4px; 
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  z-index: 0;
+}
+
+.timeline-line-progress {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 38px; /* Matches bg */
+  width: 4px;
+  background: linear-gradient(180deg, #5227FF 0%, #FF9FFC 100%);
+  transform-origin: top; 
+  border-radius: 4px;
+  z-index: 1;
+}
+
+/* --- THE ITEM ROW (Flexbox) --- */
+.timeline-item {
+  display: flex; /* This is the key: Two physical columns */
+  width: 100%;
+  position: relative;
+  z-index: 2;
+}
+
+/* COLUMN 1: Marker (Fixed Width) */
+/* This box physically pushes the text away. The text CANNOT enter this space. */
+.timeline-marker-col {
+  width: 80px; /* Fixed width */
+  flex-shrink: 0; /* Never shrink */
+  position: relative;
+  display: flex;
+  justify-content: center; /* Center the dot horizontally */
+  align-items: flex-start; /* Align dot to top */
+  padding-top: 10px; /* Align with text top */
+}
+
+/* The Dot */
+.timeline-dot {
+  width: 16px;
+  height: 16px;
+  background: #000;
+  border: 3px solid #FF9FFC;
+  border-radius: 50%;
+  box-shadow: 0 0 15px rgba(255, 159, 252, 0.8);
+  z-index: 10;
+  position: relative; /* Relative to marker-col */
+}
+
+/* The Connector Line */
+.timeline-connector {
+  position: absolute;
+  left: 50%; /* Start from center of marker col (where the line is) */
+  top: 18px; /* Center of dot */
+  width: 40px; /* Reach to the right */
+  height: 2px;
+  background: linear-gradient(90deg, #FF9FFC, rgba(255,255,255,0));
+  z-index: 5;
+}
+
+/* COLUMN 2: Content (Fluid Width) */
+.timeline-content-col {
+  flex-grow: 1; /* Take remaining space */
+  padding-left: 10px; /* Extra gap */
+}
+
+/* The Card Styling */
+.timeline-card {
+  background: rgba(15, 15, 25, 0.7);
+  backdrop-filter: blur(12px);
+  padding: 1.5rem;
+  border-left: 2px solid #5227FF; /* Accent border */
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  border-right: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 4px 12px 12px 4px;
+  transition: transform 0.3s ease, border-left-color 0.3s ease;
+}
+
+.timeline-card:hover {
+  transform: translateX(5px);
+  border-left-color: #FF9FFC;
+  background: rgba(25, 25, 40, 0.8);
+  box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);
+}
+
+/* Typography */
+.timeline-year {
+  display: inline-flex;
+  align-items: center;
+  font-family: 'Rajdhani', sans-serif;
+  color: #B19EEF;
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+}
+
+.timeline-title {
+  color: #fff;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.5rem;
+  margin-bottom: 0.25rem;
+  font-weight: 700;
+}
+
+.timeline-place {
+  color: #FF9FFC;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  margin: 0 0 1rem 0;
+  font-weight: 500;
+}
+
+.timeline-desc {
+  color: #ccc;
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .timeline-marker-col {
+    width: 50px; /* Smaller column on mobile */
+  }
+  
+  .timeline-line-bg, .timeline-line-progress {
+    left: 23px; /* Center of 50px col */
+  }
+  
+  /* Connector adjustment handled automatically by flex centering */
+}

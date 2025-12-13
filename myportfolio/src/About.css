@@ -1,0 +1,235 @@
+/* src/About.css */
+
+/* Layout */
+.about-section {
+  position: relative;
+  z-index: 2;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 6rem 2rem 100px 2rem; /* Bottom padding for dock */
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 350px 1fr; /* Sidebar fixed, content fluid */
+  gap: 2rem;
+  max-width: 1100px;
+  width: 100%;
+}
+
+/* --- Common Glass Panel Style --- */
+.glass-panel {
+  background: rgba(20, 20, 35, 0.4); /* Darker glass for readability */
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+  padding: 2rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  position: relative;
+}
+
+/* Add a subtle top highlight */
+.glass-panel::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
+}
+
+/* --- Left Column: Profile --- */
+.profile-panel {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.profile-image-container {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  margin-bottom: 1.5rem;
+}
+
+.profile-img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 3px solid rgba(177, 158, 239, 0.5);
+  padding: 5px; /* Creates the gap between image and border */
+}
+
+.online-indicator {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  width: 15px;
+  height: 15px;
+  background-color: #00ff88;
+  border-radius: 50%;
+  border: 2px solid #1a1a2e;
+  box-shadow: 0 0 10px #00ff88;
+}
+
+.profile-name {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 2rem;
+  margin: 0;
+  color: white;
+}
+
+.profile-role {
+  font-family: 'Rajdhani', sans-serif;
+  color: #B19EEF;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-top: 0.5rem;
+  font-weight: 600;
+}
+
+.profile-stats {
+  margin-top: 2rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.stat-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #ccc;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+}
+
+.stat-icon { color: #FF9FFC; }
+
+/* Download Button */
+.download-btn {
+  margin-top: 2rem;
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(90deg, #5227FF, #B19EEF);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 700;
+  font-size: 1.1rem;
+  letter-spacing: 1px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.download-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 20px rgba(82, 39, 255, 0.5);
+}
+
+/* --- Right Column: Content --- */
+.info-column {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.panel-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.5rem;
+  color: white;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 10px;
+  display: inline-block;
+}
+
+.about-text {
+  font-family: 'Inter', sans-serif;
+  color: #e0e0e0;
+  line-height: 1.7;
+  font-size: 1.05rem;
+  margin-bottom: 1rem;
+}
+
+/* Skills Grid */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+}
+
+.skill-chip {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 1rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: border-color 0.3s;
+}
+
+.skill-chip:hover {
+  border-color: #FF9FFC;
+}
+
+.skill-icon {
+  color: #B19EEF;
+  margin-bottom: 0.5rem;
+}
+
+.skill-name {
+  display: block;
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: white;
+}
+
+.skill-bar-container {
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.skill-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #5227FF, #FF9FFC);
+  border-radius: 3px;
+}
+
+/* --- Mobile Responsiveness --- */
+@media (max-width: 900px) {
+  .about-grid {
+    grid-template-columns: 1fr; /* Stack vertically */
+  }
+  
+  .profile-panel {
+    flex-direction: row; /* Horizontal profile on mobile */
+    text-align: left;
+    gap: 20px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  
+  .profile-image-container { margin: 0; width: 80px; height: 80px; }
+  .profile-stats { display: none; /* Hide detailed stats on mobile to save space */ }
+  .download-btn { margin-top: 1rem; width: auto; padding: 10px 20px; }
+}
+
+@media (max-width: 600px) {
+  .profile-panel { flex-direction: column; text-align: center; }
+  .about-section { padding: 4rem 1.5rem; }
+}

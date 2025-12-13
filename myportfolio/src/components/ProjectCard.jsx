@@ -37,7 +37,6 @@ const ProjectCard = ({ project }) => {
   return (
     <div ref={cardRef} className="project-card">
       <div className="card-content">
-        <img src={project.image} alt={project.title} className="project-image" />
         <h3 className="project-title">{project.title}</h3>
         <p className="project-description">{project.description}</p>
         <div className="tech-stack">
