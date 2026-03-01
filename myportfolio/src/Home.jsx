@@ -1,12 +1,12 @@
 import React, { useRef } from 'react';
 import { motion, useScroll, useSpring } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { Calendar } from 'lucide-react'; 
+import { Calendar } from 'lucide-react';
 import './Home.css';
 
 // Components
 import LiquidEther from './components/LiquidEther.jsx';
-import TypewriterText from './components/typewriter.jsx'; 
+import TypewriterText from './components/typewriter.jsx';
 import FloatingDock from './components/FloatingDock.jsx';
 import GlitchText from './components/GlitchText.jsx';
 
@@ -24,7 +24,7 @@ const experienceData = [
     description: "Contributing to open-source projects and organizing tech events for the campus community."
   },
   {
-    year: "2025",
+    year: "Nov 2025-Jan 2026",
     title: "Assistant Head Web Dev, Prometeo'25",
     place: "Indian Institute of Technology, Jodhpur",
     description: "Leading the web development team for the annual technical fest, contributing to website development and functionality."
@@ -98,15 +98,15 @@ export default function Home() {
           </p>
 
           {/* Projects CTA */}
-          <motion.div 
+          <motion.div
             style={{ marginTop: '5rem', marginBottom: '3rem' }}
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             transition={{ delay: 0.2, duration: 1 }}
             viewport={{ once: true }}
           >
-            <TypewriterText 
-              words={["View my projects here", "Explore my work"]} 
+            <TypewriterText
+              words={["View my projects here", "Explore my work"]}
               typingSpeed={100}
               pauseTime={2000}
             />
@@ -123,17 +123,16 @@ export default function Home() {
             </Link>
           </motion.div>
 
-
           {/* About Me CTA */}
-          <motion.div 
-            style={{ marginTop: '8rem', marginBottom: '3rem' }} 
+          <motion.div
+            style={{ marginTop: '8rem', marginBottom: '3rem' }}
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             transition={{ delay: 0.2, duration: 1 }}
             viewport={{ once: true }}
           >
-            <TypewriterText 
-              words={["Know more about me", "Visit profile"]} 
+            <TypewriterText
+              words={["Know more about me", "Visit profile"]}
               typingSpeed={100}
               pauseTime={2000}
             />

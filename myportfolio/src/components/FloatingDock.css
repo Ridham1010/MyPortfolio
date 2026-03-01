@@ -43,6 +43,16 @@
   color: #FF9FFC;
 }
 
+.dock-item-active {
+  background: rgba(82, 39, 255, 0.3);
+  color: #00ff88;
+  box-shadow: 0 0 12px rgba(0, 255, 136, 0.3);
+}
+
+.dock-item-active:hover {
+  color: #00ff88;
+}
+
 .dock-tooltip {
   position: absolute;
   top: -40px;

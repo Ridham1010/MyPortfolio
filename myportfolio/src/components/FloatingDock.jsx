@@ -2,17 +2,20 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Home, FolderGit2, User, Mail, Github, X, Phone, Copy, Check } from 'lucide-react';
+import { Home, FolderGit2, User, Mail, Github, X, Phone, Copy, Check, TerminalSquare } from 'lucide-react';
 import './FloatingDock.css';
+import Terminal from './Terminal.jsx';
 
 const FloatingDock = () => {
   const [showContact, setShowContact] = useState(false);
+  const [showTerminal, setShowTerminal] = useState(false);
   const [copied, setCopied] = useState(null);
 
   const dockItems = [
     { icon: <Home size={24} />, label: 'Home', path: '/' },
     { icon: <FolderGit2 size={24} />, label: 'Projects', path: '/projects' },
-    { icon: <User size={24} />, label: 'About', path: '/about' }, // <--- Restored this
+    { icon: <User size={24} />, label: 'About', path: '/about' },
+    { icon: <TerminalSquare size={24} />, label: 'Terminal', isTerminal: true },
     { icon: <Github size={24} />, label: 'GitHub', path: 'https://github.com/Ridham1010', external: true },
     { icon: <Mail size={24} />, label: 'Contact', isAction: true },
   ];
@@ -29,7 +32,23 @@ const FloatingDock = () => {
       <div className="dock-container">
         <div className="dock-glass">
           {dockItems.map((item, index) => {
-            // Case 1: The Contact Button (Popup Trigger)
+            // Terminal button
+            if (item.isTerminal) {
+              return (
+                <motion.div
+                  key={index}
+                  className={`dock-item ${showTerminal ? 'dock-item-active' : ''}`}
+                  onClick={() => setShowTerminal(!showTerminal)}
+                  whileHover={{ scale: 1.2, y: -10 }}
+                  whileTap={{ scale: 0.9 }}
+                >
+                  {item.icon}
+                  <span className="dock-tooltip">{item.label}</span>
+                </motion.div>
+              );
+            }
+
+            // Contact button
             if (item.isAction) {
               return (
                 <motion.div
@@ -45,10 +64,10 @@ const FloatingDock = () => {
               );
             }
 
-            // Case 2: External Link
+            // External link
             if (item.external) {
               return (
-                <motion.a 
+                <motion.a
                   key={index}
                   href={item.path}
                   target="_blank"
@@ -63,7 +82,7 @@ const FloatingDock = () => {
               );
             }
 
-            // Case 3: Internal Router Link (Home, Projects, About)
+            // Internal router link
             return (
               <motion.div
                   key={index}
@@ -80,17 +99,43 @@ const FloatingDock = () => {
         </div>
       </div>
 
+      {/* --- TERMINAL OVERLAY --- */}
+      <AnimatePresence>
+        {showTerminal && (
+          <motion.div
+            className="terminal-overlay"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            onClick={(e) => {
+              // Close if clicking the backdrop
+              if (e.target === e.currentTarget) setShowTerminal(false);
+            }}
+          >
+            <motion.div
+              initial={{ opacity: 0, y: 40, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 40, scale: 0.95 }}
+              transition={{ duration: 0.25, ease: [0.25, 0.46, 0.45, 0.94] }}
+            >
+              <Terminal onClose={() => setShowTerminal(false)} />
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* --- THE CONTACT POPUP --- */}
       <AnimatePresence>
         {showContact && (
-          <motion.div 
+          <motion.div
             className="modal-backdrop"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setShowContact(false)}
           >
-            <motion.div 
+            <motion.div
               className="modal-content glass-card"
               initial={{ scale: 0.8, opacity: 0, y: 20 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
@@ -100,7 +145,7 @@ const FloatingDock = () => {
               <button className="close-btn" onClick={() => setShowContact(false)}>
                 <X size={20} />
               </button>
-              
+
               <h2 className="modal-title">Get in Touch</h2>
               <p className="modal-subtitle">Open for collaborations and new opportunities.</p>
 
@@ -110,8 +155,8 @@ const FloatingDock = () => {
                   <span className="label">Email</span>
                   <span className="value">b24cs1064@gmail.com</span>
                 </div>
-                <button 
-                  className="copy-btn" 
+                <button
+                  className="copy-btn"
                   onClick={() => handleCopy('b24cs1064@gmail.com', 'email')}
                 >
                   {copied === 'email' ? <Check size={18} color="#00ff88" /> : <Copy size={18} />}
@@ -124,8 +169,8 @@ const FloatingDock = () => {
                   <span className="label">Phone</span>
                   <span className="value">+91 9429646285</span>
                 </div>
-                <button 
-                  className="copy-btn" 
+                <button
+                  className="copy-btn"
                   onClick={() => handleCopy('+919429646285', 'phone')}
                 >
                   {copied === 'phone' ? <Check size={18} color="#00ff88" /> : <Copy size={18} />}

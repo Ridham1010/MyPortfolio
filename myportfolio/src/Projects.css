@@ -4,8 +4,8 @@
   position: relative;
   z-index: 2;
   min-height: 100vh;
-  padding: 6rem 2rem 120px 2rem;
-  max-width: 1200px;
+  padding: 5rem 2rem 120px 2rem;
+  max-width: 1100px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -15,125 +15,279 @@
 /* --- Header --- */
 .projects-header {
   text-align: center;
-  margin-bottom: 3rem;
+  margin-bottom: 2.5rem;
 }
 
 .projects-subtitle {
   font-family: 'Rajdhani', sans-serif;
   color: #B19EEF;
   letter-spacing: 4px;
-  font-size: 1rem;
+  font-size: 0.9rem;
   margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
   animation: pulse-text 2s infinite;
 }
 
 @keyframes pulse-text {
   0%, 100% { opacity: 1; }
-  50% { opacity: 0.6; }
+  50% { opacity: 0.5; }
 }
 
 /* --- Control Panel (Tabs) --- */
 .control-panel {
   margin-bottom: 3rem;
-  background: rgba(255, 255, 255, 0.05);
-  padding: 5px;
-  border-radius: 30px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
 }
 
 .toggle-switch {
   position: relative;
   display: flex;
-  gap: 10px;
+  gap: 4px;
+  background: rgba(255, 255, 255, 0.04);
+  padding: 4px;
+  border-radius: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
 }
 
 .toggle-btn {
   background: transparent;
   border: none;
-  padding: 12px 30px;
-  color: #aaa;
+  padding: 12px 32px;
+  color: rgba(255, 255, 255, 0.45);
   font-family: 'Rajdhani', sans-serif;
   font-weight: 700;
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   cursor: pointer;
   z-index: 2;
   display: flex;
   align-items: center;
   gap: 8px;
   transition: color 0.3s;
+  letter-spacing: 1px;
+  text-transform: uppercase;
 }
 
 .toggle-btn.active {
   color: white;
 }
 
-/* The sliding highlight pill */
+.toggle-btn:hover:not(.active) {
+  color: rgba(255, 255, 255, 0.7);
+}
+
 .switch-highlight {
   position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 50%;
-  background: linear-gradient(90deg, #5227FF, #B19EEF);
+  top: 4px;
+  bottom: 4px;
+  width: calc(50% - 4px);
+  background: linear-gradient(135deg, #5227FF, #8B5CF6);
   border-radius: 25px;
   z-index: 1;
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 0 15px rgba(82, 39, 255, 0.5);
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 0 20px rgba(82, 39, 255, 0.4), inset 0 1px 0 rgba(255,255,255,0.1);
 }
 
 .switch-highlight.individual { transform: translateX(0); }
-.switch-highlight.group { transform: translateX(100%); }
+.switch-highlight.group { transform: translateX(calc(100% + 4px)); }
+
+.project-count {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.35);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
 
 /* --- Grid Layout --- */
 .projects-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
   gap: 2rem;
   width: 100%;
 }
 
 /* --- Holographic Card Design --- */
 .holo-card {
-  background: rgba(20, 20, 35, 0.6);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 16px;
-  padding: 2rem;
   position: relative;
-  overflow: hidden;
-  transition: all 0.3s ease;
-  backdrop-filter: blur(12px);
+  border-radius: 16px;
+  padding: 2px; /* Space for the border glow */
+  transition: transform 0.15s ease-out;
+  will-change: transform;
+  cursor: default;
 }
 
-.holo-card:hover {
-  border-color: #FF9FFC;
-  transform: translateY(-5px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 159, 252, 0.2);
+/* Animated gradient border */
+.card-border-glow {
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  background: linear-gradient(
+    135deg,
+    rgba(82, 39, 255, 0.3),
+    rgba(139, 92, 246, 0.1),
+    rgba(255, 159, 252, 0.1),
+    rgba(82, 39, 255, 0.3)
+  );
+  background-size: 300% 300%;
+  z-index: 0;
+  opacity: 0;
+  transition: opacity 0.4s ease;
 }
 
-/* Card Content */
-.card-header {
+.holo-card.hovered .card-border-glow {
+  opacity: 1;
+  animation: border-shimmer 3s linear infinite;
+}
+
+@keyframes border-shimmer {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Card shimmer overlay */
+.card-shimmer {
+  position: absolute;
+  inset: 2px;
+  border-radius: 14px;
+  background: linear-gradient(
+    105deg,
+    transparent 40%,
+    rgba(255, 255, 255, 0.03) 45%,
+    rgba(255, 255, 255, 0.06) 50%,
+    rgba(255, 255, 255, 0.03) 55%,
+    transparent 60%
+  );
+  background-size: 250% 100%;
+  z-index: 3;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.holo-card.hovered .card-shimmer {
+  opacity: 1;
+  animation: shimmer-sweep 2s ease-in-out infinite;
+}
+
+@keyframes shimmer-sweep {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Card content area */
+.card-content {
+  position: relative;
+  z-index: 2;
+  background: rgba(12, 12, 24, 0.75);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 14px;
+  padding: 1.75rem;
+  transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.holo-card.hovered .card-content {
+  border-color: rgba(139, 92, 246, 0.25);
+  background: rgba(16, 16, 32, 0.85);
+  box-shadow:
+    0 20px 60px -10px rgba(0, 0, 0, 0.6),
+    0 0 30px -5px rgba(82, 39, 255, 0.15);
+}
+
+/* Meta row: project number + status */
+.card-meta-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1rem;
 }
 
-.card-title {
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 1.5rem;
-  margin: 0;
-  color: white;
+.project-number {
+  font-family: 'Space Grotesk', monospace;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.15);
+  letter-spacing: 2px;
 }
 
-.card-icon { color: #B19EEF; }
+.holo-card.hovered .project-number {
+  color: rgba(139, 92, 246, 0.5);
+}
 
+.card-status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: rgba(0, 255, 136, 0.5);
+  text-transform: uppercase;
+}
+
+.status-dot {
+  width: 6px;
+  height: 6px;
+  background: #00ff88;
+  border-radius: 50%;
+  animation: status-pulse 2s ease-in-out infinite;
+}
+
+@keyframes status-pulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 4px rgba(0, 255, 136, 0.6); }
+  50% { opacity: 0.4; box-shadow: 0 0 8px rgba(0, 255, 136, 0.3); }
+}
+
+/* Card header */
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.75rem;
+}
+
+.card-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.4rem;
+  margin: 0;
+  color: white;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.card-icon {
+  color: rgba(177, 158, 239, 0.4);
+  flex-shrink: 0;
+  margin-top: 4px;
+  transition: color 0.3s;
+}
+
+.holo-card.hovered .card-icon {
+  color: #B19EEF;
+}
+
+/* Card description */
 .card-desc {
   font-family: 'Inter', sans-serif;
-  color: #ccc;
-  font-size: 0.95rem;
-  line-height: 1.6;
-  margin-bottom: 1.5rem;
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 0.9rem;
+  line-height: 1.7;
+  margin-bottom: 1.25rem;
   min-height: 3rem;
+  transition: color 0.3s;
+}
+
+.holo-card.hovered .card-desc {
+  color: rgba(255, 255, 255, 0.75);
 }
 
 /* Tech Stack Chips */
@@ -141,25 +295,35 @@
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
 }
 
 .tech-chip {
-  background: rgba(255, 255, 255, 0.05);
-  padding: 6px 12px;
+  background: rgba(82, 39, 255, 0.08);
+  padding: 5px 12px;
   border-radius: 20px;
   font-family: 'Rajdhani', sans-serif;
-  font-size: 0.85rem;
-  color: #88c0d0;
-  border: 1px solid rgba(136, 192, 208, 0.2);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: rgba(177, 158, 239, 0.7);
+  border: 1px solid rgba(82, 39, 255, 0.15);
   display: flex;
   align-items: center;
+  gap: 5px;
+  letter-spacing: 0.5px;
+  transition: all 0.3s;
+}
+
+.holo-card.hovered .tech-chip {
+  background: rgba(82, 39, 255, 0.15);
+  border-color: rgba(139, 92, 246, 0.3);
+  color: #B19EEF;
 }
 
 /* Action Buttons */
 .card-actions {
   display: flex;
-  gap: 15px;
+  gap: 12px;
 }
 
 .action-btn {
@@ -169,62 +333,111 @@
   justify-content: center;
   gap: 8px;
   padding: 10px;
-  border-radius: 8px;
+  border-radius: 10px;
   text-decoration: none;
   font-family: 'Rajdhani', sans-serif;
   font-weight: 700;
-  transition: all 0.2s;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: white;
-  background: rgba(255, 255, 255, 0.05);
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+  transition: all 0.25s ease;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.03);
 }
 
-.action-btn:hover {
-  background: white;
-  color: black;
-  box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+.action-btn.github-btn:hover {
+  background: rgba(255, 255, 255, 0.95);
+  color: #0d0d0d;
+  border-color: white;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+}
+
+.action-btn.live-btn:hover {
+  background: linear-gradient(135deg, #5227FF, #8B5CF6);
+  color: white;
+  border-color: #8B5CF6;
+  box-shadow: 0 0 20px rgba(82, 39, 255, 0.4);
 }
 
 /* --- HUD Corners --- */
 .corner {
   position: absolute;
-  width: 20px;
-  height: 20px;
-  border: 2px solid transparent;
-  transition: border-color 0.3s;
+  width: 16px;
+  height: 16px;
+  z-index: 4;
+  transition: all 0.3s;
 }
 
 .top-left {
-  top: 0; left: 0;
-  border-top-color: rgba(255, 255, 255, 0.2);
-  border-left-color: rgba(255, 255, 255, 0.2);
-  border-top-left-radius: 16px;
+  top: 2px; left: 2px;
+  border-top: 2px solid rgba(255, 255, 255, 0.08);
+  border-left: 2px solid rgba(255, 255, 255, 0.08);
+  border-top-left-radius: 14px;
+}
+
+.top-right {
+  top: 2px; right: 2px;
+  border-top: 2px solid rgba(255, 255, 255, 0.08);
+  border-right: 2px solid rgba(255, 255, 255, 0.08);
+  border-top-right-radius: 14px;
+}
+
+.bottom-left {
+  bottom: 2px; left: 2px;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.08);
+  border-left: 2px solid rgba(255, 255, 255, 0.08);
+  border-bottom-left-radius: 14px;
 }
 
 .bottom-right {
-  bottom: 0; right: 0;
-  border-bottom-color: rgba(255, 255, 255, 0.2);
-  border-right-color: rgba(255, 255, 255, 0.2);
-  border-bottom-right-radius: 16px;
+  bottom: 2px; right: 2px;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.08);
+  border-right: 2px solid rgba(255, 255, 255, 0.08);
+  border-bottom-right-radius: 14px;
 }
 
-.holo-card:hover .top-left {
-  border-top-color: #00ff88;
-  border-left-color: #00ff88;
+.holo-card.hovered .top-left,
+.holo-card.hovered .bottom-right {
+  border-color: rgba(0, 255, 136, 0.5);
+  width: 22px;
+  height: 22px;
 }
 
-.holo-card:hover .bottom-right {
-  border-bottom-color: #00ff88;
-  border-right-color: #00ff88;
+.holo-card.hovered .top-right,
+.holo-card.hovered .bottom-left {
+  border-color: rgba(139, 92, 246, 0.4);
+  width: 22px;
+  height: 22px;
 }
 
 /* Mobile Adjustments */
 @media (max-width: 768px) {
+  .projects-container {
+    padding: 4rem 1rem 120px 1rem;
+  }
+
   .projects-grid {
     grid-template-columns: 1fr;
+    gap: 1.5rem;
   }
+
   .toggle-btn {
-    padding: 10px 20px;
-    font-size: 1rem;
+    padding: 10px 24px;
+    font-size: 0.95rem;
+  }
+
+  .card-content {
+    padding: 1.5rem;
+  }
+
+  .card-title {
+    font-size: 1.25rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .toggle-btn {
+    padding: 10px 16px;
+    font-size: 0.9rem;
   }
 }
